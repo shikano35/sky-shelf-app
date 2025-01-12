@@ -1,0 +1,8 @@
+node_modules/
+.next/
+out/
+public/
+pacjage-lock.json
+*.config.ts
+next-env.d.ts
+postcss.config.mjs
