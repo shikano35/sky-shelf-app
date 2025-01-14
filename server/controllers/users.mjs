@@ -9,6 +9,7 @@ async function getAllUsers(req, res) {
       id: true,
       username: true,
       email: true,
+      password: false, // パスワードは含めない
     },
   });
   res.json(users);
@@ -81,13 +82,14 @@ async function updateUser(req, res) {
 // DELETE: ユーザーの削除
 async function deleteUser(req, res) {
   const { id } = req.params;
-  const { deletedCount } = await prisma.user.delete({
-    where: { id: parseInt(id) },
-  });
-  if (deletedCount === 0) {
-    return res.status(404).json({ error: "Target user not found" });
+  try {
+    await prisma.user.delete({
+      where: { id: parseInt(id) },
+    });
+    res.status(204).send();
+  } catch (error) {
+    res.status(404).json({ error: "User not found" }, error);
   }
-  res.status(204).send();
 }
 
 export { getAllUsers, getUserById, registUser, updateUser, deleteUser };

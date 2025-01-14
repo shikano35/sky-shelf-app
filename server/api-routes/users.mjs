@@ -8,14 +8,19 @@ import {
   deleteUser,
 } from "../controllers/users.mjs";
 import { requestErrorHandler } from "../helpers/helper.mjs";
+import { adminOnly } from "../helpers/auth.mjs";
 
 const router = express.Router();
 
 // GET: 全てのユーザーを取得
 router.get("/", requestErrorHandler(getAllUsers));
 
+router.get("/admin/users", adminOnly, requestErrorHandler(getAllUsers));
+
 // GET: ユーザーの取得
 router.get("/:id", requestErrorHandler(getUserById));
+
+
 
 // POST: ユーザーの追加
 router.post(
@@ -35,7 +40,11 @@ router.patch(
   requestErrorHandler(updateUser)
 );
 
+router.patch("/admin/users/:id", adminOnly, requestErrorHandler(updateUser));
+
 // DELETE: ユーザーの削除
 router.delete("/:id", requestErrorHandler(deleteUser));
+
+router.delete("/admin/users/:id", adminOnly, requestErrorHandler(deleteUser));
 
 export default router;
