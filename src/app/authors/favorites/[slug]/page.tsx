@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function FavoritesAuthorsDitailsPage() {
+export default function FavoritesAuthorsDetailsPage() {
   return (
     <div>
-      <h1>FavoritesAuthorsDitails</h1>
+      <h1>FavoritesAuthorsDetails</h1>
     </div>
   );
 }
