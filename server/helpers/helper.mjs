@@ -3,10 +3,10 @@ export function requestErrorHandler(handler) {
     try {
       await handler(req, res, next);
     } catch (error) {
-      console.error("エラー詳細:", error); // エラー内容をコンソールに出力
+      console.error("エラー詳細:", error);
       res.status(500).json({
         msg: "不正なエラーが発生しました",
-        error: error.message || error, // エラー内容を含める
+        error: error.message || error,
       });
     }
   };
