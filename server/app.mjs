@@ -1,10 +1,18 @@
 import express from "express";
 import apiRoutes from "./api-routes/index.mjs";
 import env from "dotenv";
+import cors from 'cors';
+
 env.config();
 
 const app = express();
-const port = process.env.PORT || 8080;
+
+ // CORSを許可する設定
+ app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+  credentials: true
+}));
 
 app.use(express.json());
 
@@ -22,6 +30,8 @@ app.use(function (err, req, res, next) {
   res.status(500).json({ meg: "不正なエラーが発生しました", error: err });
 });
 
-app.listen(port, () => {
-  console.log(`Server Start: http://localhost:${port}`);
+// サーバーの起動
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
