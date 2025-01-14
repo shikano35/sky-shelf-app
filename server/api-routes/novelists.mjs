@@ -19,7 +19,7 @@ router.get("/:id", requestErrorHandler(getNovelistById));
 
 // POST: 小説家の追加
 router.post("/",
-  body("name").notEmpty(),
+body("name").notEmpty(),
 body("books").notEmpty(),
 body("years").notEmpty(),
 body("imageUrl").notEmpty(),
