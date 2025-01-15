@@ -45,18 +45,29 @@ export default function FavoriteNovelistsPage() {
                   };
                 }) => item.novelist
               ) // お気に入りの小説家のみを抽出
-              .map((item) => ({
-                id: item.novelist.id,
-                name: item.novelist.name,
-                comment: item.novelist.comment,
-                imageUrl: item.novelist.imageUrl,
-                details: [
-                  `代表作: ${item.novelist.books}`,
-                  `活動年: ${item.novelist.years}`,
-                ],
-                detailLink: `/authors/${item.novelist.id}`,
-                type: "novelist",
-              }));
+              .map(
+                (item: {
+                  novelist: {
+                    id: number;
+                    name: string;
+                    comment: string;
+                    imageUrl: string;
+                    books: string;
+                    years: string;
+                  };
+                }) => ({
+                  id: item.novelist.id,
+                  name: item.novelist.name,
+                  comment: item.novelist.comment,
+                  imageUrl: item.novelist.imageUrl,
+                  details: [
+                    `代表作: ${item.novelist.books}`,
+                    `活動年: ${item.novelist.years}`,
+                  ],
+                  detailLink: `/authors/${item.novelist.id}`,
+                  type: "novelist",
+                })
+              );
             setFavoriteNovelists(novelists);
           }
         } catch (error) {

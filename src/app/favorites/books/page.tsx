@@ -46,19 +46,31 @@ export default function FavoriteBooksPage() {
                   };
                 }) => item.book
               ) // お気に入りの書籍のみを抽出
-              .map((item) => ({
-                id: item.book.id,
-                name: item.book.name,
-                comment: item.book.comment,
-                imageUrl: item.book.imageUrl,
-                details: [
-                  `著者: ${item.book.writer}`,
-                  `ジャンル: ${item.book.genre}`,
-                  `出版年: ${item.book.year}`,
-                ],
-                detailLink: `/books/${item.book.id}`,
-                type: "book",
-              }));
+              .map(
+                (item: {
+                  book: {
+                    id: number;
+                    name: string;
+                    comment: string;
+                    imageUrl: string;
+                    writer: string;
+                    genre: string;
+                    year: number;
+                  };
+                }) => ({
+                  id: item.book.id,
+                  name: item.book.name,
+                  comment: item.book.comment,
+                  imageUrl: item.book.imageUrl,
+                  details: [
+                    `著者: ${item.book.writer}`,
+                    `ジャンル: ${item.book.genre}`,
+                    `出版年: ${item.book.year}`,
+                  ],
+                  detailLink: `/books/${item.book.id}`,
+                  type: "book",
+                })
+              );
             setFavoriteBooks(books);
           }
         } catch (error) {

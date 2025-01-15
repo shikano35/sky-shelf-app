@@ -20,7 +20,7 @@ export default async function AuthorDetailPage({
     <DetailCard
       imageUrl={novelist.imageUrl}
       name={novelist.name}
-      description={novelist.comment}
+      description={novelist.comment ?? "コメントがありません"}
       additionalInfo={
         <>
           <p>

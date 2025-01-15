@@ -11,9 +11,9 @@ export default async function AuthorsPage() {
   const items: Item[] = novelists.map((novelist) => ({
     id: novelist.id,
     name: novelist.name,
-    comment: novelist.comment,
+    comment: novelist.comment ?? "コメントがありません",
     imageUrl: novelist.imageUrl,
-    details: [`代表作: ${novelist.books}`, `活動年: ${novelist.years}`],
+    details: [`書籍情報: ${novelist.books}`, `年代: ${novelist.years}`],
     detailLink: `/authors/${novelist.id}`,
     type: "novelist",
   }));

@@ -10,7 +10,7 @@ export default async function BooksPage() {
   const items: Item[] = books.map((book) => ({
     id: book.id,
     name: book.name,
-    comment: book.comment,
+    comment: book.comment ?? "コメントがありません",
     imageUrl: book.imageUrl,
     details: [
       `著者: ${book.writer}`,
