@@ -14,6 +14,7 @@ type LoginResponse = {
   token: string;
   user: {
     username: string;
+    id: string;
   };
 };
 
@@ -62,13 +63,14 @@ export function LoginForm({
       // 成功時の処理
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.user.username);
+      localStorage.setItem("userId", data.user.id);
       setLoggedIn(true);
 
       // キャッシュにデータをセット
       queryClient.setQueryData(["user"], data.user);
 
       // ページ遷移
-      router.push("/books");
+      router.push("/");
     },
     onError: (error: Error) => {
       // エラー時の処理
