@@ -11,8 +11,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
-import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
+import {
+  HeartIcon as OutlineHeartIcon,
+  PencilSquareIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import { useAuthStore } from "@/store/useAuthStore";
+import { Button } from "@/components/ui/button";
 
 export type Item = {
   id: number | string;
@@ -33,7 +38,7 @@ export const ItemCardList: React.FC<ItemCardListProps> = ({
   items,
   heading,
 }) => {
-  const { isLoggedIn } = useAuthStore();
+  const { isLoggedIn, isAdmin } = useAuthStore();
   const [bookFavorites, setBookFavorites] = useState<number[]>([]);
   const [novelistFavorites, setNovelistFavorites] = useState<number[]>([]);
 
@@ -141,28 +146,50 @@ export const ItemCardList: React.FC<ItemCardListProps> = ({
         {items.map((item, index) => (
           <div key={item.id} className="m-4">
             <Card className="hover:bg-primary-foreground hover:border-slate-300 h-full relative">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  toggleFavorite(index, item.type);
-                }}
-                className={`absolute bottom-4 right-4 ${
-                  isLoggedIn ? "cursor-pointer" : "cursor-not-allowed"
-                }`}
-                disabled={!isLoggedIn}
-              >
-                {item.type === "book" ? (
-                  bookFavorites.includes(Number(item.id)) ? (
+              {isAdmin && (
+                <>
+                  <Link
+                    href={`/edit/${item.type}/${item.id}`}
+                    className="absolute top-2 right-4"
+                  >
+                    <Button variant="outline" size="icon">
+                      <PencilSquareIcon className="h-12 w-12" />
+                    </Button>
+                  </Link>
+                  <Link
+                    href={`/delete/${item.type}/${item.id}`}
+                    className="absolute bottom-2 right-4"
+                  >
+                    <Button size="icon">
+                      <TrashIcon className="h-6 w-6" />
+                    </Button>
+                  </Link>
+                </>
+              )}
+              {!isAdmin && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    toggleFavorite(index, item.type);
+                  }}
+                  className={`absolute bottom-4 right-4 ${
+                    isLoggedIn ? "cursor-pointer" : "cursor-not-allowed"
+                  }`}
+                  disabled={!isLoggedIn}
+                >
+                  {item.type === "book" ? (
+                    bookFavorites.includes(Number(item.id)) ? (
+                      <SolidHeartIcon className="h-6 w-6 text-red-500" />
+                    ) : (
+                      <OutlineHeartIcon className="h-6 w-6 text-red-500" />
+                    )
+                  ) : novelistFavorites.includes(Number(item.id)) ? (
                     <SolidHeartIcon className="h-6 w-6 text-red-500" />
                   ) : (
                     <OutlineHeartIcon className="h-6 w-6 text-red-500" />
-                  )
-                ) : novelistFavorites.includes(Number(item.id)) ? (
-                  <SolidHeartIcon className="h-6 w-6 text-red-500" />
-                ) : (
-                  <OutlineHeartIcon className="h-6 w-6 text-red-500" />
-                )}
-              </button>
+                  )}
+                </button>
+              )}
               <Link
                 href={item.detailLink}
                 className="flex flex-col items-center"
