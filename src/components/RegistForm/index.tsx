@@ -33,7 +33,7 @@ async function registerUser(credentials: {
 
 export function RegistForm() {
   const router = useRouter();
-  const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
+  const setAuth = useAuthStore((state) => state.setAuth);
 
   // useMutation フックを使用して新規登録処理を管理
   const mutation = useMutation({
@@ -42,12 +42,13 @@ export function RegistForm() {
       // トークンをlocalStorageに保存
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);
+      localStorage.setItem("isAdmin", (data.user?.isAdmin ?? false).toString());
 
       // Zustandの状態を更新
-      setLoggedIn(true);
+      setAuth(true, data.user?.isAdmin ?? false);
 
       // ホームページへリダイレクト
-      router.push("/books");
+      router.push("/");
     },
     onError: (error: Error) => {
       alert(`エラー: ${error.message}`);
