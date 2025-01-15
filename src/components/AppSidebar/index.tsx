@@ -32,13 +32,15 @@ export function AppSidebar({ isOpen, toggleSidebar }: AppSidebarProps) {
     <div>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 pointer-events-auto"
           onClick={toggleSidebar}
         />
       )}
       <Sidebar
         className={`fixed top-0 left-0 h-full bg-white shadow-lg z-50 transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+          isOpen
+            ? "translate-x-0 pointer-events-auto"
+            : "-translate-x-full pointer-events-none"
         }`}
       >
         <SidebarContent>
