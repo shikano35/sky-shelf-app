@@ -22,7 +22,7 @@ export function Header({ toggleSidebar }: HeaderProps) {
       <div className="flex items-center">
         <DrawerMenu toggleSidebar={toggleSidebar} />
         <Link href="/">
-          <h1 className="text-4xl font-bold">Readers</h1>
+          <h1 className="text-4xl font-bold">SkyShelf</h1>
         </Link>
       </div>
       {isLoggedIn ? (

@@ -7,7 +7,7 @@ export function Footer() {
       <Container>
         <hr />
         <div className="mt-16 mb-8 text-center text-gray-600 text-sm">
-          <p>&copy; {new Date().getFullYear()} Readers.</p>
+          <p>&copy; {new Date().getFullYear()} SkyShelf.</p>
         </div>
       </Container>
     </footer>
