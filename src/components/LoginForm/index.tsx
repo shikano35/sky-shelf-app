@@ -15,6 +15,7 @@ type LoginResponse = {
   user: {
     username: string;
     id: string;
+    isAdmin?: boolean; // isAdminがオプショナルに
   };
 };
 
@@ -53,18 +54,22 @@ export function LoginForm({
   url?: string;
 } & React.ComponentPropsWithoutRef<"div">) {
   const router = useRouter();
-  const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
+  const setAuth = useAuthStore((state) => state.setAuth); // useAuthStore の setAuth を使用
   const queryClient = useQueryClient();
 
-  // useMutation フック
   const mutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
-      // 成功時の処理
+      // ログイン成功後の処理
+      const isAdmin = data.user.isAdmin ?? false; // isAdminがundefinedならfalseをデフォルトにする
+
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.user.username);
       localStorage.setItem("userId", data.user.id);
-      setLoggedIn(true);
+      localStorage.setItem("isAdmin", isAdmin.toString()); // 管理者情報も保存
+
+      // 管理者フラグとログイン状態を Zustand に保存
+      setAuth(true, isAdmin);
 
       // キャッシュにデータをセット
       queryClient.setQueryData(["user"], data.user);
@@ -73,10 +78,9 @@ export function LoginForm({
       router.push("/");
     },
     onError: (error: Error) => {
-      // エラー時の処理
       console.error("ログインに失敗しました:", error.message);
     },
-    retry: 1, // リトライ回数
+    retry: 1,
   });
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
