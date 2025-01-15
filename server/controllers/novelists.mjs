@@ -14,7 +14,7 @@ async function getNovelistById(req, res) {
     where: { id: parseInt(id) },
   });
   if (!novelist) {
-    return res.status(404).json({ error: "Novelist not found" });
+    return res.status(404).json({ error: "小説家が見つかりません。" });
   }
   res.json(novelist);
 }
@@ -28,7 +28,7 @@ async function registNovelist(req, res) {
 
   const { comment, name, books, years, imageUrl, url } = req.body;
   if (!name || !books || !years || !imageUrl || !url) {
-    return res.status(400).json({ error: "Missing required fields" });
+    return res.status(400).json({ error: "必須項目が欠けています。" });
   }
 
   const newNovelist = await prisma.novelist.create({
@@ -52,7 +52,7 @@ async function updateNovelist(req, res) {
     data: { comment, name, books, years, imageUrl, url },
   });
   if (!updatedNovelist) {
-    return res.status(404).json({ error: "Novelist not found" });
+    return res.status(404).json({ error: "小説家が見つかりません。" });
   }
   res.json(updatedNovelist);
 }
@@ -64,7 +64,7 @@ async function deleteNovelist(req, res) {
     where: { id: parseInt(id) },
   });
   if (deletedCount === 0) {
-    return res.status(404).json({ error: "Target novelist not found" });
+    return res.status(404).json({ error: "対象の小説家が見つかりません。" });
   }
   res.status(204).send();
 }
