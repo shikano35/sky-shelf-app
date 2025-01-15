@@ -14,7 +14,7 @@ export default async function AuthorsPage() {
     comment: novelist.comment ?? "コメントがありません",
     imageUrl: novelist.imageUrl,
     details: [`書籍情報: ${novelist.books}`, `年代: ${novelist.years}`],
-    detailLink: `/authors/${novelist.id}`,
+    detailLink: `/novelists/${novelist.id}`,
     type: "novelist",
   }));
 
