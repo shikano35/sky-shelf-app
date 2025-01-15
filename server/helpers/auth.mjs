@@ -12,7 +12,7 @@ export function adminOnly(req, res, next) {
     if (!decoded.isAdmin) {
       return res.status(403).json({ error: "管理者権限が必要です" });
     }
-    req.user = decoded; // トークンの情報をリクエストに保存
+    req.user = decoded;
     next();
   } catch (error) {
     res.status(403).json({ error: "無効なトークンです" }, error);

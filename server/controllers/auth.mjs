@@ -2,7 +2,7 @@ import { validationResult } from "express-validator";
 import prisma from "../helpers/prisma/index.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 import { isAdmin } from "../helpers/admin.mjs";
 
 dotenv.config();
@@ -34,11 +34,21 @@ export async function login(req, res) {
     return res.status(401).json({ error: "パスワードが間違っています" });
   }
 
+  const adminStatus = isAdmin(user);
+
   const token = jwt.sign(
-    { userId: user.id, isAdmin: isAdmin(user) },
+    { userId: user.id, isAdmin: adminStatus },
     process.env.JWT_SECRET,
     { expiresIn: "1h" }
   );
 
-  res.json({ token, user: { id: user.id, username: user.username, email: user.email } });
+  res.json({
+    token,
+    user: {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      isAdmin: adminStatus,
+    },
+  });
 }
