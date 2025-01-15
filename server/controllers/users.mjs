@@ -9,7 +9,7 @@ async function getAllUsers(req, res) {
       id: true,
       username: true,
       email: true,
-      password: false, // パスワードは含めない
+      password: false,
     },
   });
   res.json(users);
@@ -27,7 +27,7 @@ async function getUserById(req, res) {
     },
   });
   if (!user) {
-    return res.status(404).json({ error: "User not found" });
+    return res.status(404).json({ error: "ユーザーが見つかりません。" });
   }
   res.json(user);
 }
@@ -59,7 +59,6 @@ async function updateUser(req, res) {
   const { id } = req.params;
   const { username, email, password } = req.body;
 
-  // パスワードが提供されている場合のみハッシュ化
   const dataToUpdate = {
     username,
     email,
@@ -74,7 +73,7 @@ async function updateUser(req, res) {
     data: dataToUpdate,
   });
   if (!updatedUser) {
-    return res.status(404).json({ error: "User not found" });
+    return res.status(404).json({ error: "ユーザーが見つかりません。" });
   }
   res.json(updatedUser);
 }
@@ -88,7 +87,7 @@ async function deleteUser(req, res) {
     });
     res.status(204).send();
   } catch (error) {
-    res.status(404).json({ error: "User not found" }, error);
+    res.status(404).json({ error: "ユーザーが見つかりません。" }, error);
   }
 }
 
