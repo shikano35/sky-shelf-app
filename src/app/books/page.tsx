@@ -17,8 +17,8 @@ export default async function BooksPage() {
       `ジャンル: ${book.genre}`,
       `出版年: ${book.year}`,
     ],
-    favoriteLink: `/books/favorites/${book.id}`,
     detailLink: `/books/${book.id}`,
+    type: "book",
   }));
 
   return (
