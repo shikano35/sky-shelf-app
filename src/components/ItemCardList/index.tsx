@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
 import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export type Item = {
   id: number | string;
@@ -19,8 +20,8 @@ export type Item = {
   comment: string;
   imageUrl: string;
   details: string[];
-  favoriteLink: string;
   detailLink: string;
+  type: "book" | "novelist";
 };
 
 type ItemCardListProps = {
@@ -32,41 +33,99 @@ export const ItemCardList: React.FC<ItemCardListProps> = ({
   items,
   heading,
 }) => {
-  const [favorites, setFavorites] = useState<boolean[]>(items.map(() => false));
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn } = useAuthStore();
+  const [bookFavorites, setBookFavorites] = useState<number[]>([]);
+  const [novelistFavorites, setNovelistFavorites] = useState<number[]>([]);
 
+  // お気に入りデータを取得
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
+    const fetchFavorites = async () => {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+
+      if (userId && token) {
+        try {
+          const response = await fetch(
+            `http://localhost:8080/api/favorites/${userId}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          if (response.ok) {
+            const data = await response.json();
+            const bookFavIds = data
+              .filter((fav: { bookId?: number }) => fav.bookId)
+              .map((fav: { bookId: number }) => fav.bookId);
+            const novelistFavIds = data
+              .filter((fav: { novelistId?: number }) => fav.novelistId)
+              .map((fav: { novelistId: number }) => fav.novelistId);
+
+            setBookFavorites(bookFavIds);
+            setNovelistFavorites(novelistFavIds);
+          } else {
+            console.error("お気に入りデータの取得に失敗しました。");
+          }
+        } catch (error) {
+          console.error("エラーが発生しました:", error);
+        }
+      }
+    };
+
+    fetchFavorites();
   }, []);
 
-  const toggleFavorite = async (index: number) => {
+  // お気に入り登録・解除
+  const toggleFavorite = async (
+    index: number,
+    itemType: "book" | "novelist"
+  ) => {
     if (!isLoggedIn) return;
 
     const item = items[index];
-    const isCurrentlyFavorite = favorites[index];
-    setFavorites((prevFavorites) => {
-      const newFavorites = [...prevFavorites];
-      newFavorites[index] = !isCurrentlyFavorite;
-      return newFavorites;
-    });
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      console.error(
+        "User ID is not available. Please ensure the user is logged in."
+      );
+      return;
+    }
 
     try {
-      const response = await fetch("http://localhost:8080/api/favorites", {
+      const url =
+        itemType === "book"
+          ? "http://localhost:8080/api/favorites/books"
+          : "http://localhost:8080/api/favorites/novelists";
+
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
-          itemId: item.id,
-          isFavorite: !isCurrentlyFavorite,
-          type: "book",
+          userId: parseInt(userId),
+          [itemType === "book" ? "bookId" : "novelistId"]: item.id,
         }),
       });
 
-      if (!response.ok) {
-        console.error("Failed to update favorite status");
+      if (response.ok) {
+        // 登録・解除の反映
+        if (itemType === "book") {
+          setBookFavorites((prevFavorites) =>
+            prevFavorites.includes(Number(item.id))
+              ? prevFavorites.filter((id) => id !== Number(item.id))
+              : [...prevFavorites, Number(item.id)]
+          );
+        } else {
+          setNovelistFavorites((prevFavorites) =>
+            prevFavorites.includes(Number(item.id))
+              ? prevFavorites.filter((id) => id !== Number(item.id))
+              : [...prevFavorites, Number(item.id)]
+          );
+        }
+      } else {
+        console.error("お気に入りの更新に失敗しました。");
       }
     } catch (error) {
       console.error("Error updating favorite status:", error);
@@ -80,23 +139,34 @@ export const ItemCardList: React.FC<ItemCardListProps> = ({
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {items.map((item, index) => (
-          <Link key={item.id} href={item.detailLink} className="m-4">
+          <div key={item.id} className="m-4">
             <Card className="hover:bg-primary-foreground hover:border-slate-300 h-full relative">
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  toggleFavorite(index);
+                  toggleFavorite(index, item.type);
                 }}
-                className="absolute bottom-4 right-4"
+                className={`absolute bottom-4 right-4 ${
+                  isLoggedIn ? "cursor-pointer" : "cursor-not-allowed"
+                }`}
                 disabled={!isLoggedIn}
               >
-                {favorites[index] ? (
+                {item.type === "book" ? (
+                  bookFavorites.includes(Number(item.id)) ? (
+                    <SolidHeartIcon className="h-6 w-6 text-red-500" />
+                  ) : (
+                    <OutlineHeartIcon className="h-6 w-6 text-red-500" />
+                  )
+                ) : novelistFavorites.includes(Number(item.id)) ? (
                   <SolidHeartIcon className="h-6 w-6 text-red-500" />
                 ) : (
                   <OutlineHeartIcon className="h-6 w-6 text-red-500" />
                 )}
               </button>
-              <div className="flex flex-col items-center">
+              <Link
+                href={item.detailLink}
+                className="flex flex-col items-center"
+              >
                 <CardHeader className="flex items-center">
                   <Image
                     src={item.imageUrl}
@@ -117,9 +187,9 @@ export const ItemCardList: React.FC<ItemCardListProps> = ({
                     </p>
                   ))}
                 </CardContent>
-              </div>
+              </Link>
             </Card>
-          </Link>
+          </div>
         ))}
       </div>
     </div>
