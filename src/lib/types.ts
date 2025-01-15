@@ -26,10 +26,3 @@ export type User = {
   password: string; // パスワード
   regDate: Date; // 登録日
 };
-
-export type Favorite = {
-  id: number;
-  userId: number; // ユーザーID
-  bookId?: number; // 書籍ID
-  novelistId?: number; // 小説家ID
-};
