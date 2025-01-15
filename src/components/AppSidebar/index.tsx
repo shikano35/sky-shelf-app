@@ -16,9 +16,9 @@ import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 const items = [
   { title: "トップページ", url: "/" },
   { title: "書籍一覧", url: "/books" },
-  { title: "小説家一覧", url: "/authors" },
-  { title: "お気に入り書籍一覧", url: "/books/favorites" },
-  { title: "お気に入り小説家一覧", url: "/authors/favorites" },
+  { title: "小説家一覧", url: "/novelists" },
+  { title: "お気に入り書籍一覧", url: "/favorites/books" },
+  { title: "お気に入り小説家一覧", url: "/favorites/novelists" },
   { title: "おまかせ", url: "/random" },
 ];
 
