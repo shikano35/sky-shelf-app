@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Webプログラミング及び演習Ⅱ 最終課題
 
-## Getting Started
+## SkyShelf
 
-First, run the development server:
+これは、青空文庫の書籍及びその作者の詳細を調べたり、読んだりするためのWebアプリケーションです。書籍、作者をお気に入り登録する機能を用意し、管理者は書籍、作者カードの追加、情報の更新、削除ができます。
+
+## 実行方法
+
+以下のコマンドで開発サーバーを実行することができます。
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+※ npm startはバンドラーの問題により正常に動作しません。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+フロントエンドは [http://localhost:3000](http://localhost:3000) 、バックエンドは [http://localhost:8080](http://localhost:8080)で動作させています。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ログイン方法
 
-## Learn More
+管理者メール: admin@admin.com
+管理者パスワード: admin
 
-To learn more about Next.js, take a look at the following resources:
+テストユーザーメール: test@test.com
+テストユーザーパスワード: test
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 技術スタック
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+|    scripts     | 内容                     |
+| :------------: | :----------------------- |
+|   TypeScript   | -                        |
+|    Next.js     | -                        |
+|  tailwind CSS  | -                        |
+|   Shadcn/ui    | UIで使用                 |
+|    Zustand     | ログイン状態の管理で使用 |
+|      clsx      | tailwindcssの結合で使用  |
+| TanStack Query | データフェッチで使用     |
+|   JavaScript   | -                        |
+|    Node.js     | -                        |
+|   Express.js   | -                        |
+|    prettier    | コードの整形             |
+|     ESLint     | 静的解析                 |
 
-## Deploy on Vercel
+## npm scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+|  scripts   | 実行内容                             |
+| :--------: | :----------------------------------- |
+|    dev     | 開発モードで起動                     |
+| dev:client | フロントエンドを開発モードで起動     |
+|  dev:api   | バックエンドを開発モードで起動       |
+|   build    | ビルド                               |
+|   start    | 本番モードで起動（正常に動作しない） |
+|    lint    | ESLintでチェック                     |
+|  prettier  | prettierで整形                       |
+|  prepare   | -                                    |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ディレクトリ説明
+
+### src/
+
+フロントエンド
+
+### server/
+
+バックエンド
