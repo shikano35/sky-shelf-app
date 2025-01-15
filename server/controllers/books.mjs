@@ -12,7 +12,7 @@ async function getBookById(req, res) {
   const { id } = req.params;
   const book = await prisma.book.findUnique({ where: { id: parseInt(id) } });
   if (!book) {
-    return res.status(404).json({ error: "Book not found" });
+    return res.status(404).json({ error: "書籍が見つかりません。" });
   }
   res.json(book);
 }
@@ -26,7 +26,7 @@ async function registBook(req, res) {
 
   const { comment, name, writer, genre, imageUrl, bookUrl, year } = req.body;
   if (!name || !writer || !genre || !imageUrl || !bookUrl) {
-    return res.status(400).json({ error: "Missing required fields" });
+    return res.status(400).json({ error: "必須項目が欠けています。" });
   }
 
   const newBook = await prisma.book.create({
@@ -50,7 +50,7 @@ async function updateBook(req, res) {
     data: { comment, name, writer, genre, imageUrl, bookUrl, year },
   });
   if (!updatedBook) {
-    return res.status(404).json({ error: "Book not found" });
+    return res.status(404).json({ error: "書籍が見つかりません。" });
   }
   res.json(updatedBook);
 }
@@ -62,7 +62,7 @@ async function deleteBook(req, res) {
     where: { id: parseInt(id) },
   });
   if (deletedCount === 0) {
-    return res.status(404).json({ error: "Target book not found" });
+    return res.status(404).json({ error: "対象の本が見つかりません。" });
   }
   res.status(204).send();
 }
