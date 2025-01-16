@@ -14,21 +14,16 @@ export async function login(req, res) {
   }
 
   const { email, password } = req.body;
-
-  console.log("入力されたデータ:", { email, password });
-
+  
   const user = await prisma.user.findUnique({
     where: { email },
   });
-
-  console.log("データベースから取得したユーザー:", user);
 
   if (!user) {
     return res.status(401).json({ error: "メールアドレスが見つかりません" });
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
-  console.log("パスワード一致確認:", isPasswordValid);
 
   if (!isPasswordValid) {
     return res.status(401).json({ error: "パスワードが間違っています" });
