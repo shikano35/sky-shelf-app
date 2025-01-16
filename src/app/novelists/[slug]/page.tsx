@@ -31,7 +31,7 @@ export default async function AuthorDetailPage({
           </p>
         </>
       }
-      backLink="/authors"
+      backLink="/novelists"
       actionLink={novelist.url}
     />
   );
