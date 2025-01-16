@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const items = [
   { title: "トップページ", url: "/" },
@@ -19,7 +20,7 @@ const items = [
   { title: "小説家一覧", url: "/novelists" },
   { title: "お気に入り書籍一覧", url: "/favorites/books" },
   { title: "お気に入り小説家一覧", url: "/favorites/novelists" },
-  { title: "おまかせ", url: "/random" },
+  { title: "おすすめ書籍一覧", url: "/random" },
 ];
 
 type AppSidebarProps = {
@@ -28,6 +29,8 @@ type AppSidebarProps = {
 };
 
 export function AppSidebar({ isOpen, toggleSidebar }: AppSidebarProps) {
+  const { isAdmin } = useAuthStore();
+
   return (
     <div>
       {isOpen && (
@@ -62,6 +65,21 @@ export function AppSidebar({ isOpen, toggleSidebar }: AppSidebarProps) {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
+                {isAdmin && (
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild className="py-6">
+                      <Link
+                        href="/users"
+                        className="mt-2"
+                        onClick={toggleSidebar}
+                      >
+                        <span className="text-base text-primary font-medium">
+                          ユーザー一覧
+                        </span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

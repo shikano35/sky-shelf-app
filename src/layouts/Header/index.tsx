@@ -5,7 +5,7 @@ import { DrawerMenu } from "@/components/DrawerMenu";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useAuthStore } from "@/store/useAuthStore";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, UserPlusIcon } from "@heroicons/react/24/outline";
 
 type HeaderProps = {
   toggleSidebar: () => void;
@@ -24,11 +24,18 @@ export function Header({ toggleSidebar }: HeaderProps) {
       </div>
       <div className="flex items-center">
         {isAdmin && (
-          <Link href="/new" className="mr-8">
-            <Button variant="outline" size="icon">
-              <PlusIcon className="w-6 h-6" />
-            </Button>
-          </Link>
+          <>
+            <Link href="/new/user" className="mr-2 md:mr-4">
+              <Button variant="outline" size="icon">
+                <UserPlusIcon className="w-6 h-6" />
+              </Button>
+            </Link>
+            <Link href="/new" className="mr-8">
+              <Button variant="outline" size="icon">
+                <PlusIcon className="w-6 h-6" />
+              </Button>
+            </Link>
+          </>
         )}
         {isLoggedIn ? (
           <Link href="/logout">

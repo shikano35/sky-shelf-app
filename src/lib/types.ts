@@ -23,6 +23,6 @@ export type User = {
   id: number;
   username: string; // ユーザー名
   email: string; // メールアドレス
-  password: string; // パスワード
-  regDate: Date; // 登録日
+  password?: string; // パスワード
+  regDate?: Date; // 登録日
 };

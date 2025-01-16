@@ -26,7 +26,7 @@ export type Item = {
   imageUrl: string;
   details: string[];
   detailLink: string;
-  type: "book" | "novelist";
+  type: "book" | "novelist" | "user";
 };
 
 type ItemCardListProps = {
@@ -82,9 +82,10 @@ export const ItemCardList: React.FC<ItemCardListProps> = ({
   // お気に入り登録・解除
   const toggleFavorite = async (
     index: number,
-    itemType: "book" | "novelist"
+    itemType: "book" | "novelist" | "user"
   ) => {
     if (!isLoggedIn) return;
+    if (itemType === "user") return;
 
     const item = items[index];
     const userId = localStorage.getItem("userId");
@@ -145,7 +146,13 @@ export const ItemCardList: React.FC<ItemCardListProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {items.map((item, index) => (
           <div key={item.id} className="m-4">
-            <Card className="hover:bg-primary-foreground hover:border-slate-300 h-full relative">
+            <Card
+              className={`h-full relative ${
+                item.type !== "user"
+                  ? "hover:bg-primary-foreground hover:border-slate-300"
+                  : ""
+              }`}
+            >
               {isAdmin && (
                 <>
                   <Link
@@ -191,8 +198,15 @@ export const ItemCardList: React.FC<ItemCardListProps> = ({
                 </button>
               )}
               <Link
-                href={item.detailLink}
-                className="flex flex-col items-center"
+                href={item.type === "user" ? "#" : item.detailLink}
+                onClick={(e) => {
+                  if (item.type === "user") {
+                    e.preventDefault();
+                  }
+                }}
+                className={`flex flex-col items-center ${
+                  item.type === "user" ? "cursor-default" : "cursor-pointer"
+                }`}
               >
                 <CardHeader className="flex items-center">
                   <Image
