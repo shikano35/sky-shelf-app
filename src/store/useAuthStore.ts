@@ -7,18 +7,26 @@ type AuthState = {
   logout: () => void;
 };
 
-export const useAuthStore = create<AuthState>((set) => ({
-  isLoggedIn: !!localStorage.getItem("token"),
-  isAdmin: localStorage.getItem("isAdmin") === "true",
-  setAuth: (loggedIn, admin) => {
-    localStorage.setItem("isLoggedIn", loggedIn.toString());
-    localStorage.setItem("isAdmin", admin.toString());
-    set({ isLoggedIn: loggedIn, isAdmin: admin });
-  },
-  logout: () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("isAdmin");
-    set({ isLoggedIn: false, isAdmin: false });
-  },
-}));
+export const useAuthStore = create<AuthState>((set) => {
+  const isClient = typeof window !== "undefined";
+
+  return {
+    isLoggedIn: isClient ? !!localStorage.getItem("token") : false,
+    isAdmin: isClient ? localStorage.getItem("isAdmin") === "true" : false,
+    setAuth: (loggedIn, admin) => {
+      if (isClient) {
+        localStorage.setItem("token", loggedIn.toString());
+        localStorage.setItem("isAdmin", admin.toString());
+      }
+      set({ isLoggedIn: loggedIn, isAdmin: admin });
+    },
+    logout: () => {
+      if (isClient) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        localStorage.removeItem("isAdmin");
+      }
+      set({ isLoggedIn: false, isAdmin: false });
+    },
+  };
+});
