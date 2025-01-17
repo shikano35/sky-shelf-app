@@ -42,7 +42,6 @@ export const ItemCardList: React.FC<ItemCardListProps> = ({
   const [bookFavorites, setBookFavorites] = useState<number[]>([]);
   const [novelistFavorites, setNovelistFavorites] = useState<number[]>([]);
 
-  // お気に入りデータを取得
   useEffect(() => {
     const fetchFavorites = async () => {
       const userId = localStorage.getItem("userId");
@@ -79,7 +78,6 @@ export const ItemCardList: React.FC<ItemCardListProps> = ({
     fetchFavorites();
   }, []);
 
-  // お気に入り登録・解除
   const toggleFavorite = async (
     index: number,
     itemType: "book" | "novelist" | "user"
@@ -116,7 +114,6 @@ export const ItemCardList: React.FC<ItemCardListProps> = ({
       });
 
       if (response.ok) {
-        // 登録・解除の反映
         if (itemType === "book") {
           setBookFavorites((prevFavorites) =>
             prevFavorites.includes(Number(item.id))

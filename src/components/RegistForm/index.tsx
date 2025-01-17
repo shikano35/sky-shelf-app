@@ -10,7 +10,6 @@ import Link from "next/link";
 import React from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 
-// 新規登録 API コール関数
 async function registerUser(credentials: {
   username: string;
   email: string;
@@ -27,7 +26,6 @@ async function registerUser(credentials: {
     throw new Error(errorData.error || "登録に失敗しました");
   }
 
-  // レスポンスからトークンを取得
   return response.json();
 }
 
@@ -35,19 +33,15 @@ export function RegistForm() {
   const router = useRouter();
   const setAuth = useAuthStore((state) => state.setAuth);
 
-  // useMutation フックを使用して新規登録処理を管理
   const mutation = useMutation({
     mutationFn: registerUser,
     onSuccess: (data) => {
-      // トークンをlocalStorageに保存
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);
       localStorage.setItem("isAdmin", (data.user?.isAdmin ?? false).toString());
 
-      // Zustandの状態を更新
       setAuth(true, data.user?.isAdmin ?? false);
 
-      // ホームページへリダイレクト
       router.push("/");
     },
     onError: (error: Error) => {
@@ -55,7 +49,6 @@ export function RegistForm() {
     },
   });
 
-  // フォーム送信処理
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);

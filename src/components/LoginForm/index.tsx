@@ -15,11 +15,10 @@ type LoginResponse = {
   user: {
     username: string;
     id: string;
-    isAdmin?: boolean; // isAdminがオプショナルに
+    isAdmin?: boolean;
   };
 };
 
-// ログイン API コール関数
 async function loginUser(credentials: {
   email: string;
   password: string;
@@ -54,27 +53,23 @@ export function LoginForm({
   url?: string;
 } & React.ComponentPropsWithoutRef<"div">) {
   const router = useRouter();
-  const setAuth = useAuthStore((state) => state.setAuth); // useAuthStore の setAuth を使用
+  const setAuth = useAuthStore((state) => state.setAuth);
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
-      // ログイン成功後の処理
-      const isAdmin = data.user.isAdmin ?? false; // isAdminがundefinedならfalseをデフォルトにする
+      const isAdmin = data.user.isAdmin ?? false;
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.user.username);
       localStorage.setItem("userId", data.user.id);
-      localStorage.setItem("isAdmin", isAdmin.toString()); // 管理者情報も保存
+      localStorage.setItem("isAdmin", isAdmin.toString());
 
-      // 管理者フラグとログイン状態を Zustand に保存
       setAuth(true, isAdmin);
 
-      // キャッシュにデータをセット
       queryClient.setQueryData(["user"], data.user);
 
-      // ページ遷移
       router.push("/");
     },
     onError: (error: Error) => {

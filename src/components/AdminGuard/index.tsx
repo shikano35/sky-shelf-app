@@ -20,7 +20,7 @@ export default function AdminGuard({ children }: AdminGuardProps) {
   }, [isAdmin, router]);
 
   if (!isAdmin) {
-    return null; // 管理者ではない場合、何も表示しない
+    return null;
   }
 
   return <>{children}</>;
