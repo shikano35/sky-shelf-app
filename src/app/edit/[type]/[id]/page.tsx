@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import AdminGuard from "@/components/AdminGuard";
 
-interface BookFormData {
+type BookFormData = {
   name: string;
   comment?: string;
   writer: string;
@@ -19,23 +19,22 @@ interface BookFormData {
   imageUrl: string;
   bookUrl: string;
   year?: string;
-}
+};
 
-interface NovelistFormData {
+type NovelistFormData = {
   name: string;
   comment?: string;
   books: string;
   years: string;
   imageUrl: string;
   url: string;
-}
+};
 
-interface UserFormData {
-  [key: string]: string;
+type UserFormData = {
   username: string;
   email: string;
   password: string;
-}
+};
 
 async function updateItem(
   type: string,
@@ -58,7 +57,7 @@ export default function Page() {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const initialFormData =
+  const initialFormData: BookFormData | NovelistFormData | UserFormData =
     type === "book"
       ? {
           name: "",
@@ -78,7 +77,7 @@ export default function Page() {
             imageUrl: "",
             url: "",
           }
-        : { username: "", email: "", password: "" }; // user の初期値
+        : { username: "", email: "", password: "" };
 
   const [formData, setFormData] = useState<
     BookFormData | NovelistFormData | UserFormData
@@ -86,7 +85,7 @@ export default function Page() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      const defaultFormData =
+      const defaultFormData: BookFormData | NovelistFormData | UserFormData =
         type === "book"
           ? {
               name: "",
@@ -148,12 +147,8 @@ export default function Page() {
       <FieldComponent
         name={name}
         placeholder={placeholder}
-        value={
-          (formData as BookFormData | NovelistFormData | UserFormData)[name] ||
-          ""
-        }
+        value={formData[name as keyof typeof formData] || ""}
         onChange={handleChange}
-        c
         className="mb-4"
         required={required}
       />
