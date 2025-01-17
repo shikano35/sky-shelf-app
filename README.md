@@ -13,7 +13,13 @@ npm install
 npm run dev
 ```
 
-※ npm startはバンドラーの問題により正常に動作しません。
+フロントエンドとバックエンドを別々に実行したい場合は以下のコマンドで行うことができます。
+
+```bash
+npm install
+npm run dev:api
+npm run start
+```
 
 フロントエンドは [http://localhost:3000](http://localhost:3000) 、バックエンドは [http://localhost:8080](http://localhost:8080)で動作させています。
 
@@ -44,16 +50,16 @@ npm run dev
 
 ## npm scripts
 
-|  scripts   | 実行内容                             |
-| :--------: | :----------------------------------- |
-|    dev     | 開発モードで起動                     |
-| dev:client | フロントエンドを開発モードで起動     |
-|  dev:api   | バックエンドを開発モードで起動       |
-|   build    | ビルド                               |
-|   start    | 本番モードで起動（正常に動作しない） |
-|    lint    | ESLintでチェック                     |
-|  prettier  | prettierで整形                       |
-|  prepare   | -                                    |
+|  scripts   | 実行内容                         |
+| :--------: | :------------------------------- |
+|    dev     | 開発モードで起動                 |
+| dev:client | フロントエンドを開発モードで起動 |
+|  dev:api   | バックエンドを開発モードで起動   |
+|   build    | ビルド                           |
+|   start    | 本番モードで起動                 |
+|    lint    | ESLintでチェック                 |
+|  prettier  | prettierで整形                   |
+|  prepare   | -                                |
 
 ## ディレクトリ説明
 
