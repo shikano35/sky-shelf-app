@@ -11,7 +11,7 @@ export default function FavoriteBooksPage() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      window.location.href = "/"; // ログインしていない場合、トップページへリダイレクト
+      window.location.href = "/";
       return;
     }
 
@@ -45,7 +45,7 @@ export default function FavoriteBooksPage() {
                     year: number;
                   };
                 }) => item.book
-              ) // お気に入りの書籍のみを抽出
+              )
               .map(
                 (item: {
                   book: {
