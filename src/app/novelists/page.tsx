@@ -7,7 +7,6 @@ import { Novelist } from "@/lib/types";
 export default async function AuthorsPage() {
   const novelists: Novelist[] = await fetchNovelists();
 
-  // `Item`型のデータに変換
   const items: Item[] = novelists.map((novelist) => ({
     id: novelist.id,
     name: novelist.name,
