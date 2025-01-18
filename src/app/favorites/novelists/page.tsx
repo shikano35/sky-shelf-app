@@ -11,7 +11,7 @@ export default function FavoriteNovelistsPage() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      window.location.href = "/"; // ログインしていない場合、トップページへリダイレクト
+      window.location.href = "/";
       return;
     }
 
