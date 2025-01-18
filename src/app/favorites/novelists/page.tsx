@@ -44,7 +44,7 @@ export default function FavoriteNovelistsPage() {
                     years: string;
                   };
                 }) => item.novelist
-              ) // お気に入りの小説家のみを抽出
+              )
               .map(
                 (item: {
                   novelist: {
