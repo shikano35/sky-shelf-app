@@ -9,14 +9,12 @@
 以下のコマンドで開発サーバーを実行することができます。
 
 ```bash
-npm install
 npm run dev
 ```
 
 フロントエンドとバックエンドを別々に実行したい場合は以下のコマンドで行うことができます。
 
 ```bash
-npm install
 npm run dev:api
 npm run start
 ```
@@ -31,6 +29,11 @@ npm run start
 テストユーザーメール: test@test.com
 テストユーザーパスワード: test
 
+## 注意
+
+書籍で追加できる画像URLは[https://www.amazon.co.jp/]の画像のみです。
+小説家で追加できる画像URLは[https://ja.wikipedia.org/wiki/]の画像のみです。
+
 ## 技術スタック
 
 |    scripts     | 内容                     |
@@ -40,7 +43,6 @@ npm run start
 |  tailwind CSS  | -                        |
 |   Shadcn/ui    | UIで使用                 |
 |    Zustand     | ログイン状態の管理で使用 |
-|      clsx      | tailwindcssの結合で使用  |
 | TanStack Query | データフェッチで使用     |
 |   JavaScript   | -                        |
 |    Node.js     | -                        |
