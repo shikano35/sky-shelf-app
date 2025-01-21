@@ -45,8 +45,8 @@ npm run start
 |    Next.js     | -                                        |
 |  tailwind CSS  | -                                        |
 |   Shadcn/ui    | UIで使用                                 |
-|    Zustand     | 非同期の状態管理及びデータフェッチで使用 |
-| TanStack Query | データフェッチで使用                     |
+|    Zustand     | ログイン状態の管理で使用                 |
+| TanStack Query | 非同期の状態管理及びデータフェッチで使用 |
 |   JavaScript   | -                                        |
 |    Node.js     | -                                        |
 |   Express.js   | -                                        |
