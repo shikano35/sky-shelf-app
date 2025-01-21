@@ -24,14 +24,17 @@ npm run start
 ## ログイン方法
 
 管理者メール: admin@admin.com
+<br>
 管理者パスワード: admin
 
 テストユーザーメール: test@test.com
+<br>
 テストユーザーパスワード: test
 
 ## 注意
 
 書籍で追加できる画像URLは`https://www.amazon.co.jp/`の画像のみです。
+<br>
 小説家で追加できる画像URLは`https://ja.wikipedia.org/wiki/`の画像のみです。
 
 ## 技術スタック
