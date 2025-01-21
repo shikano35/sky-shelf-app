@@ -6,8 +6,6 @@ import {
   DrawerClose,
   DrawerContent,
   DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { MenuItems } from "@/components/MenuItems";
@@ -44,9 +42,6 @@ export function DrawerMenu({ toggleSidebar }: DrawerMenuProps) {
       <div className="md:hidden">
         <DrawerContent>
           <div className="mx-auto w-full max-w-sm">
-            <DrawerHeader>
-              <DrawerTitle>Navigation</DrawerTitle>
-            </DrawerHeader>
             <MenuItems onLinkClick={handleClose} />
             <DrawerFooter>
               <DrawerClose asChild>
