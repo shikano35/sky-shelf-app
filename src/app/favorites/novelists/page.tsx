@@ -64,7 +64,7 @@ export default function FavoriteNovelistsPage() {
                     `代表作: ${item.novelist.books}`,
                     `活動年: ${item.novelist.years}`,
                   ],
-                  detailLink: `/authors/${item.novelist.id}`,
+                  detailLink: `/novelists/${item.novelist.id}`,
                   type: "novelist",
                 })
               );
