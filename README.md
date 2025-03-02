@@ -25,17 +25,17 @@ npm run build
 npm run start
 ```
 
-フロントエンドは [http://localhost:3000](http://localhost:3000) 、バックエンドは [http://localhost:8080](http://localhost:8080)で動作させています。
+フロントエンドは `[http://localhost:3000](http://localhost:3000)` 、バックエンドは `[http://localhost:8080](http://localhost:8080)`で動作させています。
 
 ## ログイン方法
 
-管理者メール: admin@admin.com
+管理者メール: `admin@admin.com`
 <br>
-管理者パスワード: admin
+管理者パスワード: `admin`
 
-テストユーザーメール: test@test.com
+テストユーザーメール: `test@test.com`
 <br>
-テストユーザーパスワード: test
+テストユーザーパスワード: `test`
 
 ## 技術スタック
 
