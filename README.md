@@ -37,12 +37,6 @@ npm run start
 <br>
 テストユーザーパスワード: test
 
-## 注意
-
-書籍で追加できる画像URLは`https://www.amazon.co.jp/`の画像のみです。
-<br>
-小説家で追加できる画像URLは`https://ja.wikipedia.org/wiki/`の画像のみです。
-
 ## 技術スタック
 
 |    scripts     | 内容                                     |
