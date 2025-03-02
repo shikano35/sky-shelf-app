@@ -9,7 +9,6 @@
 ```bash
 cp .env.example .env
 npm i
-npm run build
 ```
 
 2. 開発サーバーを実行
@@ -22,6 +21,7 @@ npm run dev
 
 ```bash
 npm run dev:api
+npm run build
 npm run start
 ```
 
