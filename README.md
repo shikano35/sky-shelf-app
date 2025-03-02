@@ -1,6 +1,6 @@
-この作品は2024年1月に作成しました。
+2024年1月に作成しました。
 
-[こちら](https://github.com/shikano35/readers-php-app)の作品をNext.jsでリファクタリングした作品です
+[こちら](https://github.com/shikano35/readers-php-app)をNext.jsでリファクタリングした作品です
 
 ## 実行方法
 
