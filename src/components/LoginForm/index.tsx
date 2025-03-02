@@ -70,7 +70,7 @@ export function LoginForm({
 
       queryClient.setQueryData(["user"], data.user);
 
-      router.push("/");
+      router.push("/books");
     },
     onError: (error: Error) => {
       console.error("ログインに失敗しました:", error.message);
