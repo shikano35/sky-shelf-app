@@ -1,16 +1,24 @@
-この作品は2024年2月に作成しました。
+この作品は2024年1月に作成しました。
 
 [こちら](https://github.com/shikano35/readers-php-app)の作品をNext.jsでリファクタリングした作品です
 
 ## 実行方法
 
-1. 以下のコマンドで開発サーバーを実行することができます。
+1. 準備
+
+```bash
+cp .env.example .env
+npm i
+npm run build
+```
+
+2. 開発サーバーを実行
 
 ```bash
 npm run dev
 ```
 
-2. 本番環境は以下のコマンドで行うことができます。
+3. 本番環境を実行
 
 ```bash
 npm run dev:api
